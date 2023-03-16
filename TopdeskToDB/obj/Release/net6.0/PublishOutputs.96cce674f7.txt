@@ -1,0 +1,15 @@
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.exe
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.deps.json
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.runtimeconfig.json
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.pdb
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\Newtonsoft.Json.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\System.Data.SqlClient.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\System.Text.Encodings.Web.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\System.Text.Json.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\win-arm64\native\sni.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\win-x64\native\sni.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\win-x86\native\sni.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

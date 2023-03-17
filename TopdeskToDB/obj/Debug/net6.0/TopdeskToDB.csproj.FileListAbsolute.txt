@@ -24,3 +24,4 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Debug\net6.0\Newtonsof
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Debug\net6.0\System.Text.Json.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Debug\net6.0\JsonFlatten.dll

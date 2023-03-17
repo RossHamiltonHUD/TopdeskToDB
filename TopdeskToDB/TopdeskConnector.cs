@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using JsonFlatten;
 
 namespace TopdeskToDB
 {
@@ -41,16 +43,16 @@ namespace TopdeskToDB
             return datecodes;
         }
 
-        async public Task<List<Ticket>> GetTickets(string datecode, string appPassword = "dds4i-hiuia-7idx5-kf6m2-wtl2j",
+        async public Task<List<InputTicket>> GetTicketsByDatecode(string datecode, string appPassword = "dds4i-hiuia-7idx5-kf6m2-wtl2j",
                                                 string appUsername = "r.hamilton@hud.ac.uk")
         {
             bool finishedSearching = false;
             int p = 0;
             int resultsPerPage = 10000;
 
-            string searchQuery = "closed==true;number==" + datecode + "*";
+            string searchQuery = "number==" + datecode + "*";
 
-            List<Ticket> ticketList = new List<Ticket>();
+            List<InputTicket> ticketList = new List<InputTicket>();
 
             while (!finishedSearching)
             {
@@ -59,7 +61,7 @@ namespace TopdeskToDB
                 var client = new HttpClient();
                 HttpRequestMessage req = new HttpRequestMessage();
 
-                req.RequestUri = new Uri("https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=closed==true;number==" + datecode + "*");
+                req.RequestUri = new Uri("https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery);
 
                 req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
                     "Basic", Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(appUsername + ":" + appPassword)));
@@ -68,10 +70,13 @@ namespace TopdeskToDB
 
                 string jsonResult = await response.Content.ReadAsStringAsync();
 
-                List<Ticket> ticketListPage = new List<Ticket>();
+                List<InputTicket> ticketlistpage = new List<InputTicket>();
 
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
-                ticketListPage = JsonConvert.DeserializeObject<List<Ticket>>(jsonResult, settings);
+                var ticketListPage = JsonConvert.DeserializeObject<List<InputTicket>>(jsonResult, settings);
+
+                //var jObject = JObject.Parse(jsonResult);
+                //var ticketListPage = jObject.Flatten();
 
                 if (ticketListPage != null && ticketListPage.Count > 0)
                 {

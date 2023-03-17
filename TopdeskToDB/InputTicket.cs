@@ -4,40 +4,60 @@ using Newtonsoft.Json.Converters;
 
 namespace TopdeskToDB
 {
-    public partial class Ticket
+    public partial class InputTicket
     {
+        //Fields for unpacking NestedInfo
+        public string CallerBranch;
+        public string CallerLocation;
+        public string Category;
+        public string Subcategory;
+        public string CallType;
+        public string EntryType;
+        public string Impact;
+        public string Urgency;
+        public string Priority;
+        public string Duration;
+        public string Operator;
+        public string OperatorGroup;
+        public string Supplier;
+        public string ProcessingStatus;
+        public string ClosureCode;
+        public string Creator;
+        public string Modifier;
+        public string Escalation;
+
         [JsonProperty("number")]
         public string Number { get; set; }
 
         [JsonProperty("callerBranch")]
-        public NestedInfo CallerBranch { get; set; }
+        public NestedInfo CallerBranchNest { get; set; }
 
         [JsonProperty("callerLocation")]
-        public NestedInfo CallerLocation { get; set; }
+        public NestedInfo CallerLocationNest { get; set; }
 
         [JsonProperty("category")]
-        public NestedInfo Category { get; set; }
+        public NestedInfo CategoryNest { get; set; }
 
         [JsonProperty("subcategory")]
-        public NestedInfo Subcategory { get; set; }
+        public NestedInfo SubcategoryNest { get; set; }
 
         [JsonProperty("callType")]
-        public NestedInfo CallType { get; set; }
+        public NestedInfo CallTypeNest { get; set; }
 
         [JsonProperty("entryType")]
-        public NestedInfo EntryType { get; set; }
+        public NestedInfo EntryTypeNest { get; set; }
 
         [JsonProperty("impact")]
-        public NestedInfo Impact { get; set; }
+        public NestedInfo ImpactNest { get; set; }
 
         [JsonProperty("urgency")]
-        public NestedInfo Urgency { get; set; }
+        public NestedInfo UrgencyNest { get; set; }
 
         [JsonProperty("priority")]
-        public NestedInfo Priority { get; set; }
+        public NestedInfo PriorityNest { get; set; }
 
         [JsonProperty("duration")]
-        public NestedInfo Duration { get; set; }
+        public NestedInfo DurationNest { get; set; }
 
         [JsonProperty("actualDuration")]
         public string ActualDuration { get; set; }
@@ -49,16 +69,16 @@ namespace TopdeskToDB
         public string FeedbackRating { get; set; }
 
         [JsonProperty("operator")]
-        public NestedInfo Operator { get; set; }
+        public NestedInfo OperatorNest { get; set; }
 
         [JsonProperty("operatorGroup")]
-        public NestedInfo OperatorGroup { get; set; }
+        public NestedInfo OperatorGroupNest { get; set; }
 
         [JsonProperty("supplier")]
-        public NestedInfo Supplier { get; set; }
+        public NestedInfo SupplierNest { get; set; }
 
         [JsonProperty("processingStatus")]
-        public NestedInfo ProcessingStatus { get; set; }
+        public NestedInfo ProcessingStatusNest { get; set; }
 
         [JsonProperty("responded")]
         public string Responded { get; set; }
@@ -79,19 +99,19 @@ namespace TopdeskToDB
         public string ClosedDate { get; set; }
 
         [JsonProperty("closureCode")]
-        public NestedInfo ClosureCode { get; set; }
+        public NestedInfo ClosureCodeNest { get; set; }
 
         [JsonProperty("callDate")]
         public string CallDate { get; set; }
 
         [JsonProperty("creator")]
-        public NestedInfo Creator { get; set; }
+        public NestedInfo CreatorNest { get; set; }
 
         [JsonProperty("creationDate")]
         public string CreationDate { get; set; }
 
         [JsonProperty("modifier")]
-        public NestedInfo Modifier { get; set; }
+        public NestedInfo ModifierNest { get; set; }
 
         [JsonProperty("modificationDate")]
         public string ModificationDate { get; set; }
@@ -100,7 +120,7 @@ namespace TopdeskToDB
         public string MajorCall { get; set; }
 
         [JsonProperty("optionalFields1")]
-        public OptionalFields Escalation { get; set; }
+        public OptionalFields EscalationNest { get; set; }  
     }
 
     public partial class NestedInfo

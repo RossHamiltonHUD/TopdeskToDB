@@ -24,3 +24,4 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\refint\
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\TopdeskToDB.pdb
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\TopdeskToDB.genruntimeconfig.cache
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\ref\TopdeskToDB.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\JsonFlatten.dll

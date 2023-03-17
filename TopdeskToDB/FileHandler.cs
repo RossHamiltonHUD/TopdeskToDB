@@ -37,7 +37,7 @@ namespace TopdeskToDB
             return datecodesToReturn;
         }
 
-        public void SaveTickets(string datecode, List<Ticket> tickets)
+        public void SaveTickets(string datecode, List<InputTicket> tickets)
         {
             string path = GetFilepathForDatecode(datecode);
 

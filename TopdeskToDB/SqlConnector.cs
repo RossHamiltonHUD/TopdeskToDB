@@ -44,11 +44,11 @@ namespace TopdeskToDB
             return count;
         }
 
-        public void InsertTickets(List<Ticket> ticketInput)
+        public void InsertTickets(List<InputTicket> ticketInput)
         {
             OpenConnection();
 
-            foreach (Ticket ticket in ticketInput)
+            foreach (InputTicket ticket in ticketInput)
             {
                 Console.Write("\rWriting " + ticket.Number + " to database...                   ");
 
@@ -87,7 +87,7 @@ namespace TopdeskToDB
                 cmd.Parameters.AddWithValue("@Modifier", PrepVar(ticket.Modifier));
                 cmd.Parameters.AddWithValue("@ModificationDate", PrepVar(ticket.ModificationDate));
                 cmd.Parameters.AddWithValue("@MajorCall", PrepVar(ticket.MajorCall));
-                cmd.Parameters.AddWithValue("@Escalation", PrepVar(ticket.Escalation.EscType));
+                cmd.Parameters.AddWithValue("@Escalation", PrepVar(ticket.Escalation));
 
                 cmd.ExecuteNonQuery();
             }

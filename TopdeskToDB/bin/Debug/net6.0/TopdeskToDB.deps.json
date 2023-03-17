@@ -8,12 +8,24 @@
     ".NETCoreApp,Version=v6.0": {
       "TopdeskToDB/1.0.0": {
         "dependencies": {
+          "JsonFlatten": "1.0.2",
           "Newtonsoft.Json": "13.0.3",
           "System.Data.SqlClient": "4.8.5",
           "System.Text.Json": "7.0.2"
         },
         "runtime": {
           "TopdeskToDB.dll": {}
+        }
+      },
+      "JsonFlatten/1.0.2": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.1/JsonFlatten.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
         }
       },
       "Microsoft.NETCore.Platforms/3.1.0": {},
@@ -138,6 +150,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "JsonFlatten/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fiUlz4o6ICovZbMe+SidoORDpQd0GrCgQqUszZFO32Ba+sjTIAGAGYhrjFK15tSukQmMD6Iro3VSkFjWDPu8Xw==",
+      "path": "jsonflatten/1.0.2",
+      "hashPath": "jsonflatten.1.0.2.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",

@@ -3,6 +3,7 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.deps.json
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.runtimeconfig.json
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\TopdeskToDB.pdb
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\JsonFlatten.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\Newtonsoft.Json.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\System.Data.SqlClient.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\publish\System.Text.Encodings.Web.dll

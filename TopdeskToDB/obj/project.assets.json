@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "JsonFlatten/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.1/JsonFlatten.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/JsonFlatten.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -192,6 +204,18 @@
     }
   },
   "libraries": {
+    "JsonFlatten/1.0.2": {
+      "sha512": "fiUlz4o6ICovZbMe+SidoORDpQd0GrCgQqUszZFO32Ba+sjTIAGAGYhrjFK15tSukQmMD6Iro3VSkFjWDPu8Xw==",
+      "type": "package",
+      "path": "jsonflatten/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsonflatten.1.0.2.nupkg.sha512",
+        "jsonflatten.nuspec",
+        "lib/netstandard1.1/JsonFlatten.dll"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -665,6 +689,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "JsonFlatten >= 1.0.2",
       "Newtonsoft.Json >= 13.0.3",
       "System.Data.SqlClient >= 4.8.5",
       "System.Text.Json >= 7.0.2"
@@ -709,6 +734,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "JsonFlatten": {
+            "target": "Package",
+            "version": "[1.0.2, )"
+          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "RuGHKomLWFcTFlsZeczzC7/QrVyTFXHbpqBV6Wm9/90iVA45sWj0t89HVYAuJY+xeKBt84373Ms2Dlv6PRIesQ==",
+  "dgSpecHash": "CtP8qU5fEbpWaAlc9bF9XrHpA5JoqImyan+o1tjrKhdXgMNK34v3QYU6D2QZhLauGSsgE+z6Bi9Foevra0S0vQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\cmsxrh2\\source\\repos\\TopdeskToDB\\TopdeskToDB\\TopdeskToDB.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\cmsxrh2\\.nuget\\packages\\jsonflatten\\1.0.2\\jsonflatten.1.0.2.nupkg.sha512",
     "C:\\Users\\cmsxrh2\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\cmsxrh2\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\cmsxrh2\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",

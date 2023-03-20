@@ -6,26 +6,6 @@ namespace TopdeskDataCache
 {
     public partial class InputTicket
     {
-        //Fields for unpacking NestedInfo
-        public string CallerBranch;
-        public string CallerLocation;
-        public string Category;
-        public string Subcategory;
-        public string CallType;
-        public string EntryType;
-        public string Impact;
-        public string Urgency;
-        public string Priority;
-        public string Duration;
-        public string Operator;
-        public string OperatorGroup;
-        public string Supplier;
-        public string ProcessingStatus;
-        public string ClosureCode;
-        public string Creator;
-        public string Modifier;
-        public string Escalation;
-
         [JsonProperty("number")]
         public string Number { get; set; }
 
@@ -33,34 +13,34 @@ namespace TopdeskDataCache
         public string Id { get; set; }
 
         [JsonProperty("callerBranch")]
-        public NestedInfo CallerBranchNest { get; set; }
+        public NestedInfo CallerBranch { get; set; }
 
         [JsonProperty("callerLocation")]
-        public NestedInfo CallerLocationNest { get; set; }
+        public NestedInfo CallerLocation { get; set; }
 
         [JsonProperty("category")]
-        public NestedInfo CategoryNest { get; set; }
+        public NestedInfo Category { get; set; }
 
         [JsonProperty("subcategory")]
-        public NestedInfo SubcategoryNest { get; set; }
+        public NestedInfo Subcategory { get; set; }
 
         [JsonProperty("callType")]
-        public NestedInfo CallTypeNest { get; set; }
+        public NestedInfo CallType { get; set; }
 
         [JsonProperty("entryType")]
-        public NestedInfo EntryTypeNest { get; set; }
+        public NestedInfo EntryType { get; set; }
 
         [JsonProperty("impact")]
-        public NestedInfo ImpactNest { get; set; }
+        public NestedInfo Impact { get; set; }
 
         [JsonProperty("urgency")]
-        public NestedInfo UrgencyNest { get; set; }
+        public NestedInfo Urgency { get; set; }
 
         [JsonProperty("priority")]
-        public NestedInfo PriorityNest { get; set; }
+        public NestedInfo Priority { get; set; }
 
         [JsonProperty("duration")]
-        public NestedInfo DurationNest { get; set; }
+        public NestedInfo Duration { get; set; }
 
         [JsonProperty("actualDuration")]
         public string ActualDuration { get; set; }
@@ -72,16 +52,16 @@ namespace TopdeskDataCache
         public string FeedbackRating { get; set; }
 
         [JsonProperty("operator")]
-        public NestedInfo OperatorNest { get; set; }
+        public NestedInfo Operator { get; set; }
 
         [JsonProperty("operatorGroup")]
-        public NestedInfo OperatorGroupNest { get; set; }
+        public NestedInfo OperatorGroup { get; set; }
 
         [JsonProperty("supplier")]
-        public NestedInfo SupplierNest { get; set; }
+        public NestedInfo Supplier { get; set; }
 
         [JsonProperty("processingStatus")]
-        public NestedInfo ProcessingStatusNest { get; set; }
+        public NestedInfo ProcessingStatus { get; set; }
 
         [JsonProperty("responded")]
         public string Responded { get; set; }
@@ -102,19 +82,19 @@ namespace TopdeskDataCache
         public string ClosedDate { get; set; }
 
         [JsonProperty("closureCode")]
-        public NestedInfo ClosureCodeNest { get; set; }
+        public NestedInfo ClosureCode { get; set; }
 
         [JsonProperty("callDate")]
         public string CallDate { get; set; }
 
         [JsonProperty("creator")]
-        public NestedInfo CreatorNest { get; set; }
+        public NestedInfo Creator { get; set; }
 
         [JsonProperty("creationDate")]
         public string CreationDate { get; set; }
 
         [JsonProperty("modifier")]
-        public NestedInfo ModifierNest { get; set; }
+        public NestedInfo Modifier { get; set; }
 
         [JsonProperty("modificationDate")]
         public string ModificationDate { get; set; }
@@ -123,7 +103,7 @@ namespace TopdeskDataCache
         public string MajorCall { get; set; }
 
         [JsonProperty("optionalFields1")]
-        public OptionalFields EscalationNest { get; set; }  
+        public OptionalFields Escalation { get; set; }  
     }
 
     public partial class NestedInfo

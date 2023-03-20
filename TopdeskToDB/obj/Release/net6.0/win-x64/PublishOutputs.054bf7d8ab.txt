@@ -1,0 +1,4 @@
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskDataCache_v1\TopdeskDataCache.pdb
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskDataCache_v1\TopdeskDataCache.dll.config
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskDataCache_v1\sni.dll
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskDataCache_v1\TopdeskDataCache.exe

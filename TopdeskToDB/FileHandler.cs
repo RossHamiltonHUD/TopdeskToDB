@@ -15,6 +15,15 @@ namespace TopdeskDataCache
         {
             baseFilepath = baseFilepathArg;
             System.IO.Directory.CreateDirectory(baseFilepath);
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2016");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2017");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2018");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2019");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2020");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2021");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2022");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2023");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\2024");
         }
 
         public List<string> CheckNeededData(List<string> datecodes)

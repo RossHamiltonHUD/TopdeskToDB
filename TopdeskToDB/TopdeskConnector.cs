@@ -4,9 +4,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Configuration;
 using JsonFlatten;
 
-namespace TopdeskToDB
+namespace TopdeskDataCache
 {
     internal class TopdeskConnector
     {
@@ -26,7 +27,7 @@ namespace TopdeskToDB
             {
                 if (selectedYear == endYear)
                 {
-                    monthLimit = endMonth - 1;
+                    monthLimit = endMonth;
                 }
 
                 while (selectedMonth <= monthLimit)
@@ -43,12 +44,24 @@ namespace TopdeskToDB
             return datecodes;
         }
 
-        async public Task<List<InputTicket>> GetTicketsByDatecode(string datecode, string appPassword = "dds4i-hiuia-7idx5-kf6m2-wtl2j",
-                                                string appUsername = "r.hamilton@hud.ac.uk")
+        async public Task<List<InputTicket>> GetTicketsByDatecode(string datecode, string appPassword = "",
+                                                string appUsername = "")
         {
+            if (appUsername == "")
+            { appUsername = ConfigurationManager.AppSettings.Get("config_topdesk_email_address"); }
+            if (appPassword == "")
+            { appPassword = ConfigurationManager.AppSettings.Get("config_topdesk_application_password"); }
+
             bool finishedSearching = false;
             int p = 0;
-            int resultsPerPage = 10000;
+            int resultsPerPage;
+
+            try
+            {
+                resultsPerPage = Int16.Parse(ConfigurationManager.AppSettings.Get("config_topdesk_api_page_size"));
+            }
+            catch
+            {   resultsPerPage = 10000;  }
 
             string searchQuery = "number==" + datecode + "*";
 
@@ -62,6 +75,7 @@ namespace TopdeskToDB
                 HttpRequestMessage req = new HttpRequestMessage();
 
                 req.RequestUri = new Uri("https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery);
+                //Console.Write("\rFetching "+req.RequestUri.ToString() +" with " + appUsername + " : " + appPassword);
 
                 req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
                     "Basic", Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(appUsername + ":" + appPassword)));

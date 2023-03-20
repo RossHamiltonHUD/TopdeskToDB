@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace TopdeskToDB
+namespace TopdeskDataCache
 {
     internal class SqlConnector
     {
@@ -15,7 +15,7 @@ namespace TopdeskToDB
         private SqlDataReader reader;
 
         public void OpenConnection(string connectionString = "Persist Security Info=False;" +
-                                    "Integrated Security=true;Initial Catalog=TopdeskToDB;server=(local)")
+                                    "Integrated Security=true;Initial Catalog=TopdeskToDb;server=(local)")
         {
             conn = new SqlConnection(connectionString);
             cmd = new SqlCommand(connectionString, conn);

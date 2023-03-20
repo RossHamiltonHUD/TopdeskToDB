@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 
-namespace TopdeskToDB
+namespace TopdeskDataCache
 {
     public static class DataHandler
     {
@@ -13,17 +14,102 @@ namespace TopdeskToDB
         //  Set up our classes for interacting with different systems
         private static TopdeskConnector tdConnector = new TopdeskConnector();
         private static FileHandler fileHandler = new FileHandler(baseFilepath);
-        //private static SqlConnector sqlConnector = new SqlConnector(); -- For using a SQL Server
+        //private static SqlConnector sqlConnector = new SqlConnector(); //-- For using a SQL Server
 
-        public static void Main()
+        public static string topdeskEmailAddress = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
+        public static string topdeskAppPassword = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
+
+        public static bool unattendedMode = true;
+
+        public static void Main(string[] args)
         {
-            //This first section takes user input for the intended earliest collection year, and checks it's the right format
-            int startYear = 0;
-
-            while (startYear == 0)
+            if (topdeskEmailAddress == "" || topdeskAppPassword == "")
             {
-                Console.WriteLine("Please enter a starting year (as 2 digits, e.g. '18' or '21')");
+                if (!unattendedMode) { Console.WriteLine("Please enter your Topdesk details in Topdesk.dll.config! Press enter to quit..."); }
+                Console.ReadLine();
+                System.Environment.Exit(0);
+                //GetTopdeskCredentials();
+            }
+
+            //Get a sensible start year from the user
+            int startingYear = GetStartingYear();
+
+            List<string> datecodes = tdConnector.GetDatecodes(startingYear);
+
+            //ImportToDatabase(datecodes);
+            //Console.WriteLine("Finished collecting data!");
+            
+            ImportToFile(datecodes);
+            if (!unattendedMode) { Console.WriteLine("Finished collecting data!"); }
+
+            Console.ReadLine();
+        }
+
+        public static void GetTopdeskCredentials()
+        {
+            Console.WriteLine("Please enter your Topdesk email address and press Enter");
+            topdeskEmailAddress = Console.ReadLine().Trim();
+
+            Console.WriteLine("Please generate an application password in Topdesk, paste it here and press Enter");
+            topdeskAppPassword = Console.ReadLine().Trim();
+
+            Console.WriteLine("Please add these to TopdeskDataCache.dll.config to store them for the next run");
+            /*
+            Console.WriteLine("Would you like to save this to App.Config for next time you run this tool? (y/n)");
+            
+            string decision = Console.ReadLine().Trim().ToLower();
+            bool decisionMade = false;
+
+            while (!decisionMade)
+            {
+                if (decision != "y" && decision != "n")
+                {
+                    Console.WriteLine("Please enter 'n' or 'y' - would you like to save your credentials?");
+                }
+
+                else
+                {
+                    decisionMade = true;
+                }
+
+                if (decision == "y")
+                {
+                    Configuration configuration =
+                    ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    configuration.AppSettings.Settings["config_topdesk_email_address"].Value = topdeskEmailAddress;
+                    configuration.AppSettings.Settings["config_topdesk_application_password"].Value = topdeskAppPassword;
+                    configuration.Save(ConfigurationSaveMode.Full, true);
+                    ConfigurationManager.RefreshSection("appSettings");
+                }
+            }
+            */
+        }
+
+        public static int GetStartingYear()
+        {
+            bool yearSelected = false;
+            int startYear = 0;
+            int lastYear = Int16.Parse(DateTime.Now.ToString("yy")) -1;
+
+            while (!yearSelected)
+            {
+                if (unattendedMode)
+                {
+                    startYear = lastYear;
+                    yearSelected = true;
+                    continue;
+                }
+
+                Console.WriteLine("Please enter a starting year (as 2 digits, between 2016 and now. For example, '18' or '21')");
+                Console.WriteLine("Hit enter to default to last year");
                 string userInput = Console.ReadLine();
+
+                if (userInput == "")
+                {
+                    startYear = lastYear;
+                    yearSelected = true;
+                    continue;
+                }
 
                 var r = new System.Text.RegularExpressions.Regex("^\\d{2}$");
 
@@ -34,15 +120,22 @@ namespace TopdeskToDB
                 }
 
                 startYear = Int16.Parse(userInput);
+
+                if (startYear > lastYear + 1 || startYear < 16)
+                {
+                    Console.WriteLine("Topdesk data started in 2016 - you must enter between 16 and " + (lastYear + 1));
+                }
+
+                yearSelected = true;
+
             }
 
-            List<string> datecodes = tdConnector.GetDatecodes(startYear);
+            if (!unattendedMode)
+            {
+                Console.WriteLine("Selected year: " + startYear);
+            }
 
-            //ImportToDatabase(datecodes
-            Console.WriteLine("Finished collecting data!");
-            ImportToFile(datecodes);
-
-            Console.ReadLine();
+            return startYear;
         }
 
         //public static void ImportToDatabase(List<string> datecodes)
@@ -84,7 +177,7 @@ namespace TopdeskToDB
 
             if (datecodesToCheck.Count == 0)
             {
-                Console.WriteLine("Files exist for all requested datecodes already!");
+                if (!unattendedMode) { Console.WriteLine("Files exist for all requested datecodes already!"); }
                 return;
             }
 
@@ -95,21 +188,22 @@ namespace TopdeskToDB
             {
                 string percentageComplete = ((i * 100) / datecodesToCheck.Count) + "%";
 
+                bool lastMonth = (datecode == datecodesToCheck[datecodesToCheck.Count - 1]);
+
                 //int ticketsFound = sqlConnector.GetExistingTicketCount(datecode);
 
-                Console.Write("Fetching tickets for " + datecode + " using Topdesk API");
+                if (!unattendedMode) { Console.Write("Fetching tickets for " + datecode + " using Topdesk API"); }
 
                 Task<List<InputTicket>> task = tdConnector.GetTicketsByDatecode(datecode);
                 List<InputTicket> ticketsForDatecode = task.Result;
-                fileHandler.SaveTickets(datecode, ticketsForDatecode);
+                fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth);
 
-                Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to file " + fileHandler.GetFilepathForDatecode(datecode));
+                if (!unattendedMode) { Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to file " + fileHandler.GetFilepathForDatecode(datecode)); }
                 totalImported = totalImported + ticketsForDatecode.Count;
                 i++;
             }
-            Console.WriteLine();
 
-            Console.WriteLine("Total of " + totalImported.ToString("N0") + " tickets imported on this run");
+            if (!unattendedMode) { Console.WriteLine("\n\nTotal of " + totalImported.ToString("N0") + " tickets imported on this run"); }
         }
     }
 }

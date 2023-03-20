@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace TopdeskToDB
+namespace TopdeskDataCache
 {
     public partial class InputTicket
     {
@@ -28,6 +28,9 @@ namespace TopdeskToDB
 
         [JsonProperty("number")]
         public string Number { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
         [JsonProperty("callerBranch")]
         public NestedInfo CallerBranchNest { get; set; }

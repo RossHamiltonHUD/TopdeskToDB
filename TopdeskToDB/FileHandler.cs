@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TopdeskToDB
+namespace TopdeskDataCache
 {
     internal class FileHandler
     {
@@ -25,25 +25,25 @@ namespace TopdeskToDB
             {
                 string path = GetFilepathForDatecode(datecode);
 
-                if (!File.Exists(path))
+                if (!File.Exists(path) || datecode == datecodes[datecodes.Count-1])
                 {
-                    //Console.WriteLine(datecode + ".json not found");
                     datecodesToReturn.Add(datecode);
                     continue;
                 }
-                //Console.WriteLine(datecode + ".json already exists");
             }
 
             return datecodesToReturn;
         }
 
-        public void SaveTickets(string datecode, List<InputTicket> tickets)
+        public void SaveTickets(string datecode, List<InputTicket> tickets, bool currentMonth)
         {
             string path = GetFilepathForDatecode(datecode);
 
+            if (currentMonth) { File.Delete(@path); }
+
             using (StreamWriter file = File.CreateText(@path))
             {
-                JsonSerializer serializer = new JsonSerializer();
+                JsonSerializer serializer = new JsonSerializer();   
                 serializer.Serialize(file, tickets);
             }
         }

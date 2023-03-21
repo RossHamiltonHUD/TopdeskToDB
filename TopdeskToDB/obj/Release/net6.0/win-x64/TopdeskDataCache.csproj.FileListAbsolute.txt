@@ -248,3 +248,4 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\win-x64
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\win-x64\TopdeskDataCache.genruntimeconfig.cache
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\win-x64\ref\TopdeskDataCache.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\Setup.ps1
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\TopdeskReport.pbit

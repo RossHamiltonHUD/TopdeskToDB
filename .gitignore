@@ -1,3 +1,4 @@
 T*.json
 TopdeskDataCache_v1/
+.vs/
 *.zip

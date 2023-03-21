@@ -75,7 +75,6 @@ namespace TopdeskDataCache
                 HttpRequestMessage req = new HttpRequestMessage();
 
                 req.RequestUri = new Uri("https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery);
-                //Console.Write("\rFetching "+req.RequestUri.ToString() +" with " + appUsername + " : " + appPassword);
 
                 req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
                     "Basic", Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(appUsername + ":" + appPassword)));
@@ -88,9 +87,6 @@ namespace TopdeskDataCache
 
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
                 var ticketListPage = JsonConvert.DeserializeObject<List<InputTicket>>(jsonResult, settings);
-
-                //var jObject = JObject.Parse(jsonResult);
-                //var ticketListPage = jObject.Flatten();
 
                 if (ticketListPage != null && ticketListPage.Count > 0)
                 {

@@ -23,4 +23,10 @@
     <Folder Include="topdeskData\2024\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Setup.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

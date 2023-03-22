@@ -19,7 +19,7 @@ namespace TopdeskDataCache
         public static string topdeskEmailAddress = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
         public static string topdeskAppPassword = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
 
-        public static bool unattendedMode = false;
+        public static bool unattendedMode = true;
 
         public static void Main(string[] args)
         {

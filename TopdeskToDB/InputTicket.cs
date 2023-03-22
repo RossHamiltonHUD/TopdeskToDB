@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace TopdeskDataCache
 {
-    public partial class InputTicket
+    public partial class Ticket
     {
         [JsonProperty("number")]
         public string Number { get; set; }

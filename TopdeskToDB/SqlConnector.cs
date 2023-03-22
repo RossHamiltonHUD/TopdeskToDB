@@ -44,11 +44,11 @@ namespace TopdeskDataCache
             return count;
         }
 
-        public void InsertTickets(List<InputTicket> ticketInput)
+        public void InsertTickets(List<Ticket> ticketInput)
         {
             OpenConnection();
 
-            foreach (InputTicket ticket in ticketInput)
+            foreach (Ticket ticket in ticketInput)
             {
                 Console.Write("\rWriting " + ticket.Number + " to database...                   ");
 

@@ -19,7 +19,7 @@ namespace TopdeskDataCache
         public static string topdeskEmailAddress = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
         public static string topdeskAppPassword = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
 
-        public static bool unattendedMode = true;
+        public static bool unattendedMode = false;
 
         public static void Main(string[] args)
         {
@@ -97,38 +97,38 @@ namespace TopdeskDataCache
             return startYear;
         }
 
-        public static void ImportToDatabase(List<string> datecodes)
-        {
-            int totalImported = 0;
-            int i = 0;
+        //public static void ImportToDatabase(List<string> datecodes)
+        //{
+        //    int totalImported = 0;
+        //    int i = 0;
 
-            foreach (string datecode in datecodes)
-            {
-                string percentageComplete = ((i * 100) / datecodes.Count) + "%";
+        //    foreach (string datecode in datecodes)
+        //    {
+        //        string percentageComplete = ((i * 100) / datecodes.Count) + "%";
 
-                int ticketsFound = sqlConnector.GetExistingTicketCount(datecode);
+        //        int ticketsFound = sqlConnector.GetExistingTicketCount(datecode);
 
-                if (ticketsFound != 0)
-                {
-                    Console.Write("\r(" + percentageComplete + ") " + ticketsFound.ToString("N0") + " tickets in DB for " + datecode + ", skipping...");
-                    i++;
-                    continue;
-                }
+        //        if (ticketsFound != 0)
+        //        {
+        //            Console.Write("\r(" + percentageComplete + ") " + ticketsFound.ToString("N0") + " tickets in DB for " + datecode + ", skipping...");
+        //            i++;
+        //            continue;
+        //        }
 
-                Console.Write("Fetching tickets for " + datecode + " using Topdesk API");
+        //        Console.Write("Fetching tickets for " + datecode + " using Topdesk API");
 
-                Task<List<InputTicket>> task = tdConnector.GetTicketsByDatecode(datecode);
-                List<InputTicket> ticketsForDatecode = task.Result;
-                sqlConnector.InsertTickets(ticketsForDatecode);
+        //        Task<List<Ticket>> task = tdConnector.GetTicketsByDatecode(datecode);
+        //        List<Ticket> ticketsForDatecode = task.Result;
+        //        sqlConnector.InsertTickets(ticketsForDatecode);
 
-                Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to the database for " + datecode);
-                totalImported = totalImported + ticketsForDatecode.Count;
-                i++;
-            }
-            Console.WriteLine();
+        //        Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to the database for " + datecode);
+        //        totalImported = totalImported + ticketsForDatecode.Count;
+        //        i++;
+        //    }
+        //    Console.WriteLine();
 
-            Console.WriteLine("Total of " + totalImported.ToString("N0") + " tickets imported on this run");
-        }
+        //    Console.WriteLine("Total of " + totalImported.ToString("N0") + " tickets imported on this run");
+        //}
 
         public static void ImportToFile(List<string> datecodes)
         {
@@ -153,14 +153,16 @@ namespace TopdeskDataCache
 
                 if (!unattendedMode) { Console.Write("Fetching tickets for " + datecode + " using Topdesk API"); }
 
-                Task<List<InputTicket>> task = tdConnector.GetTicketsByDatecode(datecode);
-                List<InputTicket> ticketsForDatecode = task.Result;
+                List<Ticket> ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode);
                 fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth);
 
                 if (!unattendedMode) { Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to file " + fileHandler.GetFilepathForDatecode(datecode)); }
                 totalImported = totalImported + ticketsForDatecode.Count;
                 i++;
             }
+
+            List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
+            fileHandler.SaveKnowledge(knowledge);
 
             if (!unattendedMode) { Console.WriteLine("\n\nTotal of " + totalImported.ToString("N0") + " tickets imported on this run"); }
         }

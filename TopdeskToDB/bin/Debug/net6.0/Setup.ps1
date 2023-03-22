@@ -1,6 +1,9 @@
 ﻿function Register-Task
 {
 	cls
+
+    $here = Convert-Path(Get-Location)
+
 	Write-Host("The requests made to Topdesk aren't huge, but in the interests of minimising API calls, please")
 	Write-Host("choose an update frequency that gives you the longest refresh period that works for your purposes.")
 	Write-Host("Please select:`n")
@@ -24,7 +27,7 @@
 		5 { break } 
 	}
 
-	$Action= New-ScheduledTaskAction -Execute (Get-Location)+"TopdeskDataCache.exe"
+	$Action= New-ScheduledTaskAction -Execute ($here.ToString()+"\TopdeskDataCache.exe") -WorkingDirectory ($here.ToString()+"\")
 	$null = Register-ScheduledTask -TaskName "Topdesk Data Cache" -Trigger $Trigger -Action $Action –Force # Specify the name of the task
 }
 
@@ -42,8 +45,10 @@ function Store-Topdesk-Creds($config)
 
 cls
 
+$here = Convert-Path(Get-Location)
+
 $exit = $false
-$config_file = (Get-Location).ToString() + "\TopdeskDataCache.dll.config"
+$config_file = Convert-Path ($here.ToString() + "\TopdeskDataCache.dll.config")
 #[xml]$config = Get-Content ($config_file)
 $config_email = $config.configuration.appSettings.add[0].value
 $config_password = $config.configuration.appSettings.add[1].value
@@ -58,7 +63,7 @@ while(!$exit)
     $config_password = $config.configuration.appSettings.add[1].value
 	
 	Write-Host ("Your data location for Power BI is: ")-ForegroundColor Black -BackgroundColor White
-	Write-Host ((Get-Location).ToString() + "\topdeskData\") -ForegroundColor Black -BackgroundColor White
+	Write-Host ($here.ToString() + "\topdeskData\") -ForegroundColor Black -BackgroundColor White
 
 	if ($config_email -eq '' -or $config_password -eq '')
 	{

@@ -1,6 +1,9 @@
 ﻿function Register-Task
 {
 	cls
+
+    $here = Convert-Path(Get-Location)
+
 	Write-Host("The requests made to Topdesk aren't huge, but in the interests of minimising API calls, please")
 	Write-Host("choose an update frequency that gives you the longest refresh period that works for your purposes.")
 	Write-Host("Please select:`n")
@@ -24,7 +27,7 @@
 		5 { break } 
 	}
 
-	$Action= New-ScheduledTaskAction -Execute ((Get-Location).ToString()+"\TopdeskDataCache.exe") -WorkingDirectory ($here.ToString()+"\")
+	$Action= New-ScheduledTaskAction -Execute ($here.ToString()+"\TopdeskDataCache.exe") -WorkingDirectory ($here.ToString()+"\")
 	$null = Register-ScheduledTask -TaskName "Topdesk Data Cache" -Trigger $Trigger -Action $Action –Force # Specify the name of the task
 }
 

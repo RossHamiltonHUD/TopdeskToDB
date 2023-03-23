@@ -6,9 +6,6 @@ namespace TopdeskDataCache
 {
     public static class DataHandler
     {
-        //  Choose a directory to use to store the ticket data
-        /*  This will accept a relative path (e.g. "topdeskData" for a dir inside the application directory,
-            or an absolute path (e.g. "\\nas\CMSXHome\cmsx_itsupport\SDC Stats\TopdeskData" or "C:\TopdeskData"     */
         private static string baseFilepath = "topdeskData";
 
         //  Set up our classes for interacting with different systems

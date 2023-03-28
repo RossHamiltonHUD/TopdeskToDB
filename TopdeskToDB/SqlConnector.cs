@@ -57,7 +57,7 @@ namespace TopdeskDataCache
                     "@Completed,@CompletedDate,@Closed,@ClosedDate,@ClosureCode,@CallDate,@Creator,@CreationDate,@Modifier,@ModificationDate,@MajorCall,@Escalation)",conn);
 
                 cmd.Parameters.AddWithValue("@Number", PrepVar(ticket.Number));
-                cmd.Parameters.AddWithValue("@CallerBranch", PrepVar(ticket.CallerBranch));
+                //cmd.Parameters.AddWithValue("@CallerBranch", PrepVar(ticket.CallerBranch));
                 cmd.Parameters.AddWithValue("@CallerLocation", PrepVar(ticket.CallerLocation));
                 cmd.Parameters.AddWithValue("@Category", PrepVar(ticket.Category));
                 cmd.Parameters.AddWithValue("@Subcategory", PrepVar(ticket.Subcategory));
@@ -74,7 +74,7 @@ namespace TopdeskDataCache
                 cmd.Parameters.AddWithValue("@OperatorGroup", PrepVar(ticket.OperatorGroup));
                 cmd.Parameters.AddWithValue("@Supplier", PrepVar(ticket.Supplier));
                 cmd.Parameters.AddWithValue("@ProcessingStatus", PrepVar(ticket.ProcessingStatus));
-                cmd.Parameters.AddWithValue("@Responded", PrepVar(ticket.Responded));
+                //cmd.Parameters.AddWithValue("@Responded", PrepVar(ticket.Responded));
                 cmd.Parameters.AddWithValue("@ResponseDate", PrepVar(ticket.ResponseDate));
                 cmd.Parameters.AddWithValue("@Completed", PrepVar(ticket.Completed));
                 cmd.Parameters.AddWithValue("@CompletedDate", PrepVar(ticket.CompletedDate));
@@ -86,7 +86,7 @@ namespace TopdeskDataCache
                 cmd.Parameters.AddWithValue("@CreationDate", PrepVar(ticket.CreationDate));
                 cmd.Parameters.AddWithValue("@Modifier", PrepVar(ticket.Modifier));
                 cmd.Parameters.AddWithValue("@ModificationDate", PrepVar(ticket.ModificationDate));
-                cmd.Parameters.AddWithValue("@MajorCall", PrepVar(ticket.MajorCall));
+                //cmd.Parameters.AddWithValue("@MajorCall", PrepVar(ticket.MajorCall));
                 cmd.Parameters.AddWithValue("@Escalation", PrepVar(ticket.Escalation));
 
                 cmd.ExecuteNonQuery();

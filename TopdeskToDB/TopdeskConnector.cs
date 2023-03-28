@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
 using JsonFlatten;
+using System.Threading;
 
 namespace TopdeskDataCache
 {
@@ -22,7 +23,7 @@ namespace TopdeskDataCache
 
             while (selectedYear <= endYear)
             {
-                if (selectedYear == endYear){   monthLimit = endMonth;  }
+                if (selectedYear == endYear) { monthLimit = endMonth; }
 
                 while (selectedMonth <= monthLimit)
                 {
@@ -42,9 +43,10 @@ namespace TopdeskDataCache
             bool finishedSearching = false;
             int p = 0;
             int resultsPerPage;
+            List<Task> tasks = new List<Task>();
 
-            try {   resultsPerPage = Int16.Parse(ConfigurationManager.AppSettings.Get("config_topdesk_api_page_size")); }
-            catch { resultsPerPage = 10000;     }
+            try { resultsPerPage = Int16.Parse(ConfigurationManager.AppSettings.Get("config_topdesk_api_page_size")); }
+            catch { resultsPerPage = 1000; }
 
             string searchQuery = "number==" + datecode + "*";
             List<Ticket> ticketList = new List<Ticket>();
@@ -53,27 +55,105 @@ namespace TopdeskDataCache
             {
                 int startValue = p * resultsPerPage;
                 string reqUrl = "https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery;
+                var ticketListPage = new List<Ticket>();
+                int retries = 5;
+                int tries = 1;
+                bool success = false;
 
-                string jsonResult = JsonRequest(searchQuery).Result;
-
-                var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
-                var ticketListPage = JsonConvert.DeserializeObject<List<Ticket>>(jsonResult, settings);
-
-                if (ticketListPage != null && ticketListPage.Count > 0)
+                while(tries <= retries && !success)
                 {
-                    ticketList.AddRange(ticketListPage);
-
-                    if (ticketListPage.Count < resultsPerPage)
+                    try
                     {
-                        finishedSearching = true;
+                        string jsonResult = JsonRequest(reqUrl).Result;
+                        var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
+                        ticketListPage = JsonConvert.DeserializeObject<List<Ticket>>(jsonResult, settings);
+
+                        if (ticketListPage != null && ticketListPage.Count > 0)
+                        {
+                            if (ConfigurationManager.AppSettings.Get("config_live_mode") == "off") { ticketListPage = ProcessTicketPage(ticketListPage); }
+                            //ticketListPage = ProcessTicketPage(ticketListPage);
+                            ticketList.AddRange(ticketListPage);
+
+                            if (ticketListPage.Count < resultsPerPage)
+                            {
+                                finishedSearching = true;
+                            }
+                        }
+                        else { finishedSearching = true; }
+
+                        success = true;
+
+                        p++;
+                    }
+                    catch
+                    {
+                        tries++;
+                        success = false;
                     }
                 }
-                else { finishedSearching = true; }
-
-                p++;
+                
             }
 
+            //WaitAll(tasks);
+
             return ticketList;
+        }
+
+        public static void WaitAll(List<Task> tasks)
+        {
+            if (tasks != null)
+            {
+                foreach (Task task in tasks)
+                { task.Wait(); }
+            }
+        }
+
+        public List<Ticket> ProcessTicketPage(List<Ticket>? ticketPage)
+        {
+            int actionRequests = 0;
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
+
+            foreach (Ticket ticket in ticketPage)
+            {
+                if (ticket.ClosureCode == null)
+                {
+                    continue;
+                }
+
+                if (ticket.ClosureCode.Name == "No Response Received")
+                {
+                    try {
+                        //string actionsUrl = "https://hud.topdesk.net/tas/api/incidents/number/" + ticket.Number + "/actions";
+                        //string jsonResult = JsonRequest(actionsUrl).Result;
+                        //var actionResult = JsonConvert.DeserializeObject<List<Action>>(jsonResult, settings);
+                        //actionRequests++;
+
+                        //if (actionResult == null)
+                        //{
+                        //    continue;
+                        //}
+
+                        //ticket.CompletedDate = actionResult.First().EntryDate;
+
+                        var tempDiff = DateTime.Parse(ticket.ClosedDate) - DateTime.Parse(ticket.CallDate);
+
+                        if (tempDiff.Days > 6.95)
+                        {
+                            ticket.CompletedDate = (DateTime.Parse(ticket.ClosedDate) - TimeSpan.FromDays(7)).ToString("G");
+                        }
+
+                        else
+                        {
+                            ticket.CompletedDate = DateTime.Parse(ticket.CompletedDate).ToString("G");
+                        }
+                    }
+                    catch { }
+                }
+
+                //Thread.Sleep(125);
+            }
+
+            return ticketPage;
         }
 
         public List<KnowledgeItem> GetKnowledge()
@@ -92,12 +172,12 @@ namespace TopdeskDataCache
 
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
                 var items = JsonConvert.DeserializeObject<Item>(jsonResult, settings);
-               
+
                 List<KnowledgeItem> knowledgeListPage = new List<KnowledgeItem>();
 
-                if (items.KnowledgeItems != null)   {   knowledgeListPage = items.KnowledgeItems.ToList<KnowledgeItem>();   }
+                if (items.KnowledgeItems != null) { knowledgeListPage = items.KnowledgeItems.ToList<KnowledgeItem>(); }
 
-                if (knowledgeListPage != null && knowledgeListPage.Count > 0)   {   knowledgeList.AddRange(knowledgeListPage);  }
+                if (knowledgeListPage != null && knowledgeListPage.Count > 0) { knowledgeList.AddRange(knowledgeListPage); }
                 else { finishedSearching = true; }
 
                 p++;
@@ -112,7 +192,7 @@ namespace TopdeskDataCache
             HttpRequestMessage req = new HttpRequestMessage();
             req.RequestUri = new Uri(queryUrl);
 
-            string auth = ConfigurationManager.AppSettings.Get("config_topdesk_email_address") + 
+            string auth = ConfigurationManager.AppSettings.Get("config_topdesk_email_address") +
                 ':' + ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
             req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(
                 "Basic", Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(auth)));

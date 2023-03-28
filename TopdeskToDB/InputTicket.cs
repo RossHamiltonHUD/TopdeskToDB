@@ -9,12 +9,6 @@ namespace TopdeskDataCache
         [JsonProperty("number")]
         public string Number { get; set; }
 
-        [JsonProperty("id")]
-        public string Id { get; set; }
-
-        [JsonProperty("callerBranch")]
-        public NestedInfo CallerBranch { get; set; }
-
         [JsonProperty("callerLocation")]
         public NestedInfo CallerLocation { get; set; }
 
@@ -63,9 +57,6 @@ namespace TopdeskDataCache
         [JsonProperty("processingStatus")]
         public NestedInfo ProcessingStatus { get; set; }
 
-        [JsonProperty("responded")]
-        public string Responded { get; set; }
-
         [JsonProperty("responseDate")]
         public string ResponseDate { get; set; }
 
@@ -99,30 +90,18 @@ namespace TopdeskDataCache
         [JsonProperty("modificationDate")]
         public string ModificationDate { get; set; }
 
-        [JsonProperty("majorCall")]
-        public string MajorCall { get; set; }
-
         [JsonProperty("optionalFields1")]
-        public OptionalFields Escalation { get; set; }  
+        public OptionalFields Escalation { get; set; }
     }
 
     public partial class NestedInfo
     {
-        [JsonProperty("id")]
-        public Guid Id { get; set; }
-
         [JsonProperty("name")]
         public string Name { get; set; }
     }
 
     public partial class Caller
     {
-        [JsonProperty("id")]
-        public Guid Id { get; set; }
-
-        [JsonProperty("dynamicName")]
-        public string DynamicName { get; set; }
-
         [JsonProperty("email")]
         public string Email { get; set; }
     }

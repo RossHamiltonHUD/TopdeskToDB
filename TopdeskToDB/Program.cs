@@ -139,29 +139,44 @@ namespace TopdeskDataCache
 
             int totalImported = 0;
             int i = 1;
+            List<Task> tasks = new List<Task>();
 
             foreach (string datecode in datecodesToCheck)
             {
-                string percentageComplete = ((i * 100) / datecodesToCheck.Count) + "%";
-
                 bool lastMonth = (datecode == datecodesToCheck[datecodesToCheck.Count - 1]);
-
-                //int ticketsFound = sqlConnector.GetExistingTicketCount(datecode);
-
-                if (!unattendedMode) { Console.Write("Fetching tickets for " + datecode + " using Topdesk API"); }
-
-                List<Ticket> ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode);
-                fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth);
-
-                if (!unattendedMode) { Console.WriteLine("\r(" + percentageComplete + ") Wrote " + ticketsForDatecode.Count.ToString("N0") + " tickets to file " + fileHandler.GetFilepathForDatecode(datecode)); }
-                totalImported = totalImported + ticketsForDatecode.Count;
-                i++;
+                //Task t = new Task(() => PullTicketList(datecode, lastMonth));
+                //tasks.Add(t);
+                //t.Start();
+                PullTicketList(datecode, lastMonth);
             }
 
             List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
             fileHandler.SaveKnowledge(knowledge);
 
+            //WaitAll(tasks);
+
             if (!unattendedMode) { Console.WriteLine("\n\nTotal of " + totalImported.ToString("N0") + " tickets imported on this run"); }
+        }
+
+        public static void WaitAll(List<Task> tasks)
+        {
+            if (tasks != null)
+            {
+                foreach (Task task in tasks)
+                { task.Wait(); }
+            }
+        }
+
+        public static void PullTicketList(string datecode, bool lastMonth)
+        {
+            List<Ticket> ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode);
+            Task t = new Task(() => ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode));
+            t.Start();
+            t.Wait();
+
+            t = new Task(() => fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth));
+            t.Start();
+            t.Wait();
         }
     }
 }

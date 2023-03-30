@@ -36,9 +36,11 @@ function Store-Topdesk-Creds($config)
     cls
 	$email = Read-Host("Please enter your Topdesk email address").Trim()
 	$app_password = Read-Host("Please paste in your Topdesk application password").Trim()
+	$url = Read-Host("Please enter your Topdesk URL prefix (https://[prefix].topdesk.net)").Trim()
 
 	$config.configuration.appSettings.add[0].value = $email.ToString()
 	$config.configuration.appSettings.add[1].value = $app_password.ToString()
+	$config.configuration.appSettings.add[2].value = $url.ToString()
 
 	$config.Save($config_file)
 }

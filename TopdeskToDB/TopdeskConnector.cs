@@ -48,13 +48,15 @@ namespace TopdeskDataCache
             try { resultsPerPage = Int16.Parse(ConfigurationManager.AppSettings.Get("config_topdesk_api_page_size")); }
             catch { resultsPerPage = 1000; }
 
+            string urlPrefix = ConfigurationManager.AppSettings.Get("config_topdesk_url");
+
             string searchQuery = "number==" + datecode + "*";
             List<Ticket> ticketList = new List<Ticket>();
 
             while (!finishedSearching)
             {
                 int startValue = p * resultsPerPage;
-                string reqUrl = "https://hud.topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery;
+                string reqUrl = "https://" + urlPrefix + ".topdesk.net/tas/api/incidents/?pageSize=" + resultsPerPage + "&start=" + startValue + "&query=" + searchQuery;
                 var ticketListPage = new List<Ticket>();
                 int retries = 5;
                 int tries = 1;
@@ -123,17 +125,19 @@ namespace TopdeskDataCache
                 if (ticket.ClosureCode.Name == "No Response Received")
                 {
                     try {
-                        //string actionsUrl = "https://hud.topdesk.net/tas/api/incidents/number/" + ticket.Number + "/actions";
-                        //string jsonResult = JsonRequest(actionsUrl).Result;
-                        //var actionResult = JsonConvert.DeserializeObject<List<Action>>(jsonResult, settings);
-                        //actionRequests++;
+                        /*
+                            string actionsUrl = "https://hud.topdesk.net/tas/api/incidents/number/" + ticket.Number + "/actions";
+                            string jsonResult = JsonRequest(actionsUrl).Result;
+                            var actionResult = JsonConvert.DeserializeObject<List<Action>>(jsonResult, settings);
+                            actionRequests++;
 
-                        //if (actionResult == null)
-                        //{
-                        //    continue;
-                        //}
+                            if (actionResult == null)
+                            {
+                                continue;
+                            }
 
-                        //ticket.CompletedDate = actionResult.First().EntryDate;
+                            ticket.CompletedDate = actionResult.First().EntryDate;
+                        */
 
                         var tempDiff = DateTime.Parse(ticket.ClosedDate) - DateTime.Parse(ticket.CallDate);
 
@@ -162,12 +166,13 @@ namespace TopdeskDataCache
             int p = 0;
             int resultsPerPage = 100;
             List<KnowledgeItem> knowledgeList = new List<KnowledgeItem>();
+            string urlPrefix = ConfigurationManager.AppSettings.Get("config_topdesk_url");
 
             while (!finishedSearching)
             {
                 int startValue = p * resultsPerPage;
                 string fields = "parent,visibility,urls,manager,title,creator,creationDate,modifier,status,modificationDate";
-                string reqUrl = "https://hud.topdesk.net/tas/api/knowledgeItems?pageSize=" + resultsPerPage + "&start=" + startValue + "&fields=" + fields;
+                string reqUrl = "https://" + urlPrefix + ".topdesk.net/tas/api/knowledgeItems?pageSize=" + resultsPerPage + "&start=" + startValue + "&fields=" + fields;
                 string jsonResult = JsonRequest(reqUrl).Result;
 
                 var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };

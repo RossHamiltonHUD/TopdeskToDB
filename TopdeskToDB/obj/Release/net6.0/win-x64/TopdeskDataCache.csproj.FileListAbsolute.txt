@@ -231,7 +231,6 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\hostfxr.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\hostpolicy.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\mscordaccore.dll
-C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\mscordaccore_amd64_amd64_6.0.722.32202.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\mscordbi.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\mscorrc.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\msquic.dll
@@ -249,3 +248,4 @@ C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\win-x64
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\obj\Release\net6.0\win-x64\ref\TopdeskDataCache.dll
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\Setup.ps1
 C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\TopdeskReport.pbit
+C:\Users\cmsxrh2\source\repos\TopdeskToDB\TopdeskToDB\bin\Release\net6.0\win-x64\mscordaccore_amd64_amd64_6.0.1623.17311.dll

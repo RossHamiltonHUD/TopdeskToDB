@@ -28,7 +28,9 @@ namespace TopdeskDataCache
             }
 
             //Get a sensible start year from the user
-            int startingYear = GetStartingYear();
+            //int startingYear = GetStartingYear();
+
+            int startingYear = Int16.Parse(ConfigurationManager.AppSettings.Get("config_starting_year"));
 
             List<string> datecodes = tdConnector.GetDatecodes(startingYear);
 
@@ -51,7 +53,8 @@ namespace TopdeskDataCache
             {
                 if (unattendedMode)
                 {
-                    startYear = lastYear;
+                    //startYear = Int16.Parse(ConfigurationManager.AppSettings.Get("config_starting_year"));
+                    startYear = 19;
                     yearSelected = true;
                     continue;
                 }

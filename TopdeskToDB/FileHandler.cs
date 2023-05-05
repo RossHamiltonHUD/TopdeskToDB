@@ -15,7 +15,7 @@ namespace TopdeskDataCache
         {
             baseFilepath = baseFilepathArg;
             System.IO.Directory.CreateDirectory(baseFilepath);
-            System.IO.Directory.CreateDirectory("\\tickets");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2016");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2017");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2018");
@@ -26,7 +26,8 @@ namespace TopdeskDataCache
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2023");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2024");
 
-            System.IO.Directory.CreateDirectory("\\knowledge");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\knowledge");
+            System.IO.Directory.CreateDirectory(baseFilepath + "\\changes");
         }
 
         public List<string> CheckNeededData(List<string> datecodes)
@@ -70,6 +71,20 @@ namespace TopdeskDataCache
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, knowledge);
+            }
+        }
+
+        public void SaveChanges(List<Change> change)
+        {
+            string path = baseFilepath + "\\changes";
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\changes.json";
+
+            using (StreamWriter file = File.CreateText(@path))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, change);
             }
         }
 

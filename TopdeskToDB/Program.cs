@@ -154,7 +154,10 @@ namespace TopdeskDataCache
             }
 
             List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
+            List<Change> change = tdConnector.GetChanges();
+
             fileHandler.SaveKnowledge(knowledge);
+            fileHandler.SaveChanges(change);
 
             //WaitAll(tasks);
 
@@ -173,13 +176,14 @@ namespace TopdeskDataCache
         public static void PullTicketList(string datecode, bool lastMonth)
         {
             List<Ticket> ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode);
-            Task t = new Task(() => ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode));
-            t.Start();
-            t.Wait();
+            //Task t = new Task(() => ticketsForDatecode = tdConnector.GetTicketsByDatecode(datecode));
+            //t.Start();
+            //t.Wait();
 
-            t = new Task(() => fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth));
-            t.Start();
-            t.Wait();
+            fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth);
+            //t = new Task(() => fileHandler.SaveTickets(datecode, ticketsForDatecode, lastMonth));
+            //t.Start();
+            //t.Wait();
         }
     }
 }

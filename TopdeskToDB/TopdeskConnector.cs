@@ -72,7 +72,7 @@ namespace TopdeskDataCache
 
                         if (ticketListPage != null && ticketListPage.Count > 0)
                         {
-                            if (ConfigurationManager.AppSettings.Get("config_live_mode") == "off") { ticketListPage = ProcessTicketPage(ticketListPage); }
+                            //if (ConfigurationManager.AppSettings.Get("config_live_mode") == "off") { ticketListPage = ProcessTicketPage(ticketListPage); }
                             //ticketListPage = ProcessTicketPage(ticketListPage);
                             ticketList.AddRange(ticketListPage);
 
@@ -189,6 +189,38 @@ namespace TopdeskDataCache
             }
 
             return knowledgeList;
+        }
+
+        public List<Change> GetChanges()
+        {
+            bool finishedSearching = false;
+            int p = 0;
+            int resultsPerPage = 1000;
+            List<Change> changeList = new List<Change>();
+            string urlPrefix = ConfigurationManager.AppSettings.Get("config_topdesk_url");
+
+            while (!finishedSearching)
+            {
+                int startValue = p * resultsPerPage;
+                string fields = "number,changeType,simple,briefDescription,creationDate,status.name,submitDate,creator,modifier,type.name,requester.name," +
+                    "requester.department.name,requestDate,urgent,impact,canceled,category,subcategory,phases,processingStatus";
+                string reqUrl = "https://" + urlPrefix + ".topdesk.net/tas/api/operatorChanges?pageSize=" + resultsPerPage + "&pageStart=" + startValue + "&fields=" + fields;
+                string jsonResult = JsonRequest(reqUrl).Result;
+
+                var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
+                var items = JsonConvert.DeserializeObject<ChangeList>(jsonResult, settings);
+
+                List<Change> changeListPage = new List<Change>();
+
+                if (items.Results != null) { changeListPage = items.Results.ToList<Change>(); }
+
+                if (changeListPage != null && changeListPage.Count > 0) { changeList.AddRange(changeListPage); }
+                else { finishedSearching = true; }
+
+                p++;
+            }
+
+            return changeList;
         }
 
         async public Task<string> JsonRequest(string queryUrl)

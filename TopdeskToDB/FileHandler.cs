@@ -87,6 +87,32 @@ namespace TopdeskDataCache
                 serializer.Serialize(file, change);
             }
         }
+        public void SaveCausedByChanges(string causedByChanges)
+        {
+            string path = baseFilepath + "\\changes";
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\causedByChanges.json";
+            File.WriteAllText(path, causedByChanges);
+        }
+
+        public void SaveProblems(string problems)
+        {
+            string path = baseFilepath + "\\problems";
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\problems.json";
+            File.WriteAllText(path, problems);
+        }
+
+        public void SaveProblemIncidentLinks(string problemLinks)
+        {
+            string path = baseFilepath + "\\problems";
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\problemIncidentLinks.json";
+            File.WriteAllText(path, problemLinks);
+        }
 
         public string GetFilepathForDatecode(string datecode)
         {

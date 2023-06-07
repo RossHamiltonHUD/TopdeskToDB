@@ -18,6 +18,9 @@
 
     public partial class Change
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("modifier")]
         public NestedInfo Modifier { get; set; }
 

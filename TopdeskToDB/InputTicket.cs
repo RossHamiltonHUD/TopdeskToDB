@@ -6,6 +6,9 @@ namespace TopdeskDataCache
 {
     public partial class Ticket
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("number")]
         public string Number { get; set; }
 

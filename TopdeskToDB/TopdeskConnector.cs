@@ -202,7 +202,7 @@ namespace TopdeskDataCache
             while (!finishedSearching)
             {
                 int startValue = p * resultsPerPage;
-                string fields = "number,changeType,simple,briefDescription,creationDate,status.name,submitDate,creator,modifier,type.name,requester.name," +
+                string fields = "id,number,changeType,simple,briefDescription,creationDate,status.name,submitDate,creator,modifier,type.name,requester.name," +
                     "requester.department.name,requestDate,urgent,impact,canceled,category,subcategory,phases,processingStatus";
                 string reqUrl = "https://" + urlPrefix + ".topdesk.net/tas/api/operatorChanges?pageSize=" + resultsPerPage + "&pageStart=" + startValue + "&fields=" + fields;
                 string jsonResult = JsonRequest(reqUrl).Result;
@@ -239,5 +239,7 @@ namespace TopdeskDataCache
 
             return jsonResult;
         }
+
+
     }
 }

@@ -13,6 +13,8 @@ namespace TopdeskDataCache
         private static FileHandler fileHandler = new FileHandler(baseFilepath);
         private static SqlConnector sqlConnector = new SqlConnector(); //-- For using a SQL Server
 
+        private static oDataInterface odata = new oDataInterface();
+
         public static string topdeskEmailAddress = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
         public static string topdeskAppPassword = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
 
@@ -153,11 +155,19 @@ namespace TopdeskDataCache
                 PullTicketList(datecode, lastMonth);
             }
 
+            string causedByChange = odata.GetIncidentsCausedByChange();
+            string problems = odata.GetProblems();
+            string problemIncidentLinks = odata.GetProblemIncidentLinks(); 
+
             List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
             List<Change> change = tdConnector.GetChanges();
 
             fileHandler.SaveKnowledge(knowledge);
             fileHandler.SaveChanges(change);
+
+            fileHandler.SaveCausedByChanges(causedByChange);
+            fileHandler.SaveProblems(problems);
+            fileHandler.SaveProblemIncidentLinks(problemIncidentLinks);
 
             //WaitAll(tasks);
 

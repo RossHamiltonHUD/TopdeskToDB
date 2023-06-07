@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("TopdeskDataCache")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.3.0")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.4.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("TopdeskDataCache")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TopdeskDataCache")]

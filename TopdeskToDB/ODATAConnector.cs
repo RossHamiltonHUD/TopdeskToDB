@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,8 @@ namespace TopdeskDataCache
 {
     internal class oDataInterface
     {
-        string username = "r.hamilton@hud.ac.uk";
-        string password = "aewbd-jlxzf-a3w45-r5dnj-pst3p";
+        string username = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
+        string password = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
         string encoded;
 
         static readonly HttpClient client = new HttpClient();

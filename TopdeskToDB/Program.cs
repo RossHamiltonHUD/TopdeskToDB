@@ -157,6 +157,7 @@ namespace TopdeskDataCache
 
             string causedByChange = odata.GetIncidentsCausedByChange();
             string problems = odata.GetProblems();
+            string problemDetails = odata.GetProblemDetails();
             string problemIncidentLinks = odata.GetProblemIncidentLinks(); 
 
             List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
@@ -167,6 +168,7 @@ namespace TopdeskDataCache
 
             fileHandler.SaveCausedByChanges(causedByChange);
             fileHandler.SaveProblems(problems);
+            fileHandler.SaveProblemDetails(problemDetails);
             fileHandler.SaveProblemIncidentLinks(problemIncidentLinks);
 
             //WaitAll(tasks);

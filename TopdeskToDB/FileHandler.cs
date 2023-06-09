@@ -105,6 +105,15 @@ namespace TopdeskDataCache
             File.WriteAllText(path, problems);
         }
 
+        public void SaveProblemDetails(string problems)
+        {
+            string path = baseFilepath + "\\problems";
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\problemDetails.json";
+            File.WriteAllText(path, problems);
+        }
+
         public void SaveProblemIncidentLinks(string problemLinks)
         {
             string path = baseFilepath + "\\problems";

@@ -43,6 +43,14 @@ namespace TopdeskDataCache
 
         public string GetProblems()
         {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/Problems";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetProblemDetails()
+        {
             string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/ProblemDetails";
             string data = oDataInterface.PullData(urlString).Result;
 

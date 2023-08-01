@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TopdeskDataCache.schema;
 
 namespace TopdeskDataCache
 {
@@ -121,6 +122,33 @@ namespace TopdeskDataCache
 
             path += "\\problemIncidentLinks.json";
             File.WriteAllText(path, problemLinks);
+        }
+
+        public void SaveIncidentSnapshots(string snapshots)
+        {
+            string path = baseFilepath + "\\tickets\\snapshots\\" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString("00");
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\" + DateTime.Now.ToString("yyMMddHHmm") + ".json";
+
+            if (snapshots.Length > 172) { File.WriteAllText(path, snapshots); }
+        }
+
+        public void SaveIDMappings(string categories,string subcategories,string operatorGroups, string operators, string statuses)
+        {
+            string path = baseFilepath + "\\id_mappings";
+            System.IO.Directory.CreateDirectory(path);
+
+            string catpath = path + "\\categories.json";
+            File.WriteAllText(catpath, categories);
+            string subpath = path + "\\subcategories.json";
+            File.WriteAllText(subpath, subcategories);
+            string opgrouppath = path + "\\operatorGroups.json";
+            File.WriteAllText(opgrouppath, operatorGroups);
+            string oppath = path + "\\operators.json";
+            File.WriteAllText(oppath, operators);
+            string statusespath = path + "\\statuses.json";
+            File.WriteAllText(statusespath, statuses);
         }
 
         public string GetFilepathForDatecode(string datecode)

@@ -5,8 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <FileVersion>1.4.0</FileVersion>
-    <Version>$(VersionPrefix)</Version>
+    <FileVersion>1.5.0</FileVersion>
+    <Version>$(VersionPrefix)1.5.0</Version>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Configuration;
 using JsonFlatten;
 using System.Threading;
+using TopdeskDataCache.schema;
 
 namespace TopdeskDataCache
 {
@@ -72,8 +73,6 @@ namespace TopdeskDataCache
 
                         if (ticketListPage != null && ticketListPage.Count > 0)
                         {
-                            //if (ConfigurationManager.AppSettings.Get("config_live_mode") == "off") { ticketListPage = ProcessTicketPage(ticketListPage); }
-                            //ticketListPage = ProcessTicketPage(ticketListPage);
                             ticketList.AddRange(ticketListPage);
 
                             if (ticketListPage.Count < resultsPerPage)
@@ -96,68 +95,7 @@ namespace TopdeskDataCache
                 
             }
 
-            //WaitAll(tasks);
-
             return ticketList;
-        }
-
-        public static void WaitAll(List<Task> tasks)
-        {
-            if (tasks != null)
-            {
-                foreach (Task task in tasks)
-                { task.Wait(); }
-            }
-        }
-
-        public List<Ticket> ProcessTicketPage(List<Ticket>? ticketPage)
-        {
-            int actionRequests = 0;
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MissingMemberHandling = MissingMemberHandling.Ignore };
-
-            foreach (Ticket ticket in ticketPage)
-            {
-                if (ticket.ClosureCode == null)
-                {
-                    continue;
-                }
-
-                if (ticket.ClosureCode.Name == "No Response Received")
-                {
-                    try {
-                        /*
-                            string actionsUrl = "https://hud.topdesk.net/tas/api/incidents/number/" + ticket.Number + "/actions";
-                            string jsonResult = JsonRequest(actionsUrl).Result;
-                            var actionResult = JsonConvert.DeserializeObject<List<Action>>(jsonResult, settings);
-                            actionRequests++;
-
-                            if (actionResult == null)
-                            {
-                                continue;
-                            }
-
-                            ticket.CompletedDate = actionResult.First().EntryDate;
-                        */
-
-                        var tempDiff = DateTime.Parse(ticket.ClosedDate) - DateTime.Parse(ticket.CallDate);
-
-                        if (tempDiff.Days > 6.95)
-                        {
-                            ticket.CompletedDate = (DateTime.Parse(ticket.ClosedDate) - TimeSpan.FromDays(7)).ToString("G");
-                        }
-
-                        else
-                        {
-                            ticket.CompletedDate = DateTime.Parse(ticket.CompletedDate).ToString("G");
-                        }
-                    }
-                    catch { }
-                }
-
-                //Thread.Sleep(125);
-            }
-
-            return ticketPage;
         }
 
         public List<KnowledgeItem> GetKnowledge()

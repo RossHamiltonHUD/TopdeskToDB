@@ -1,4 +1,4 @@
-﻿namespace TopdeskDataCache
+﻿namespace TopdeskDataCache.schema
 {
     using System;
     using System.Collections.Generic;

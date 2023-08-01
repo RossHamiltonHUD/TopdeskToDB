@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +31,6 @@ namespace TopdeskDataCache
             string responseBody = await response.Content.ReadAsStringAsync();
 
             Console.WriteLine(responseBody);
-
             return responseBody;
         }
 
@@ -63,6 +64,65 @@ namespace TopdeskDataCache
             string data = oDataInterface.PullData(urlString).Result;
 
             return data;
+        }
+
+        public string GetCategories()
+        {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/Categories?$select=id,name";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetSubcategories()
+        {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/Subcategories?$select=id,name";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetOperatorGroups()
+        {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/OperatorGroups?$select=id,name";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetOperators()
+        {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/Operators";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetStatuses()
+        {
+            string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/IncidentProcessingStatuses";
+            string data = oDataInterface.PullData(urlString).Result;
+
+            return data;
+        }
+
+        public string GetIncidentSnapshots(string urlOutLocation, string lastRun)
+        {
+            if(lastRun == "")
+            {
+                //skip
+                return "";
+            }
+
+            else
+            {
+                string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/IncidentSnapshots?$select=incidentId,operatorGroupId,timeStamp,operatorId,statusId&$filter=timeStamp ge " + lastRun;
+                string data = oDataInterface.PullData(urlString).Result;
+
+                File.WriteAllText(urlOutLocation + "\\snapshoturl.txt", urlString);
+
+                return data;
+            }
         }
     }
 }

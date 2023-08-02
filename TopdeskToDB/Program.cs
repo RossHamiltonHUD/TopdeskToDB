@@ -90,7 +90,7 @@ namespace TopdeskDataCache
             fileHandler.SaveProblemIncidentLinks(problemIncidentLinks);
             fileHandler.SaveIDMappings(categories, subcategories, operatorGroups, operators, statuses);
             fileHandler.SaveIncidentSnapshots(snapshots);
-            fileHandler.SaveChangeActivities(snapshots);
+            fileHandler.SaveChangeActivities(changeActivities);
 
             if (!unattendedMode) { Console.WriteLine("\n\nTotal of " + totalImported.ToString("N0") + " tickets imported on this run"); }
         }

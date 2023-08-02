@@ -46,7 +46,7 @@ namespace TopdeskDataCache
             int resultsPerPage;
             List<Task> tasks = new List<Task>();
 
-            try { resultsPerPage = Int16.Parse(ConfigurationManager.AppSettings.Get("config_topdesk_api_page_size")); }
+            try { resultsPerPage = 10000; }
             catch { resultsPerPage = 1000; }
 
             string urlPrefix = ConfigurationManager.AppSettings.Get("config_topdesk_url");

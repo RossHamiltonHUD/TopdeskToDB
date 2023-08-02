@@ -133,6 +133,15 @@ namespace TopdeskDataCache
 
             if (snapshots.Length > 172) { File.WriteAllText(path, snapshots); }
         }
+        public void SaveChangeActivities(string changeActivities)
+        {
+            string path = baseFilepath + "\\changes\\changeActivities\\" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString("00");
+            System.IO.Directory.CreateDirectory(path);
+
+            path += "\\" + DateTime.Now.ToString("yyMMddHHmm") + ".json";
+
+            if (changeActivities.Length > 227) { File.WriteAllText(path, changeActivities); }
+        }
 
         public void SaveIDMappings(string categories,string subcategories,string operatorGroups, string operators, string statuses)
         {

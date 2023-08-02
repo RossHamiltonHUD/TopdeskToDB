@@ -36,8 +36,10 @@ namespace TopdeskDataCache
             
             ImportToFile(datecodes);
 
-            File.WriteAllText(baseFilepath + "\\last_run.txt", DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString("00") + "-" + DateTime.Now.Day.ToString("D2") +
-                "T" + DateTime.Now.Hour.ToString("D2") + ":" + DateTime.Now.AddMinutes(-2).Minute.ToString("D2") + ":00Z");
+            DateTime utcNow = DateTime.UtcNow;
+
+            File.WriteAllText(baseFilepath + "\\last_run.txt", utcNow.Year.ToString() + "-" + utcNow.Month.ToString("00") + "-" + utcNow.Day.ToString("D2") +
+                "T" + utcNow.Hour.ToString("D2") + ":" + utcNow.AddMinutes(-1).Minute.ToString("D2") + ":00Z");
 
             if (!unattendedMode) { Console.WriteLine("Finished collecting data!"); }
 
@@ -73,6 +75,7 @@ namespace TopdeskDataCache
             string operatorGroups = odata.GetOperatorGroups();
             string operators = odata.GetOperators();
             string snapshots = odata.GetIncidentSnapshots(baseFilepath, File.ReadAllText(baseFilepath + "\\last_run.txt"));
+            string changeActivities = odata.GetChangeActivities(File.ReadAllText(baseFilepath + "\\last_run.txt"));
             string statuses = odata.GetStatuses();
 
             List<KnowledgeItem> knowledge = tdConnector.GetKnowledge();
@@ -87,6 +90,7 @@ namespace TopdeskDataCache
             fileHandler.SaveProblemIncidentLinks(problemIncidentLinks);
             fileHandler.SaveIDMappings(categories, subcategories, operatorGroups, operators, statuses);
             fileHandler.SaveIncidentSnapshots(snapshots);
+            fileHandler.SaveChangeActivities(snapshots);
 
             if (!unattendedMode) { Console.WriteLine("\n\nTotal of " + totalImported.ToString("N0") + " tickets imported on this run"); }
         }

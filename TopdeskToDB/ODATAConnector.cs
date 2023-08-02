@@ -106,9 +106,10 @@ namespace TopdeskDataCache
             return data;
         }
 
+
         public string GetIncidentSnapshots(string urlOutLocation, string lastRun)
         {
-            if(lastRun == "")
+            if (lastRun == "")
             {
                 //skip
                 return "";
@@ -120,6 +121,23 @@ namespace TopdeskDataCache
                 string data = oDataInterface.PullData(urlString).Result;
 
                 File.WriteAllText(urlOutLocation + "\\snapshoturl.txt", urlString);
+
+                return data;
+            }
+        }
+
+        public string GetChangeActivities(string lastRun)
+        {
+            if (lastRun == "")
+            {
+                //skip
+                return "";
+            }
+
+            else
+            {
+                string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/ChangeActivities?$select=creationDate,categoryId,subcategoryId,operatorGroupId,operatorId,processingStatusId,rejected,skipped,resolutionDate&$filter=resolutionDate ge " + lastRun;
+                string data = oDataInterface.PullData(urlString).Result;
 
                 return data;
             }

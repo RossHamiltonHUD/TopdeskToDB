@@ -7,6 +7,8 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
+    /* Schema for pulled Changes */
+
     public partial class ChangeList
     {
         [JsonProperty("results")]

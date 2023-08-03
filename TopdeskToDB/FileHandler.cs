@@ -15,6 +15,8 @@ namespace TopdeskDataCache
         public FileHandler(string baseFilepathArg)
         {
             baseFilepath = baseFilepathArg;
+
+            //Set up all directories we'll need
             System.IO.Directory.CreateDirectory(baseFilepath);
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2016");
@@ -26,9 +28,6 @@ namespace TopdeskDataCache
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2022");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2023");
             System.IO.Directory.CreateDirectory(baseFilepath + "\\tickets\\2024");
-
-            System.IO.Directory.CreateDirectory(baseFilepath + "\\knowledge");
-            System.IO.Directory.CreateDirectory(baseFilepath + "\\changes");
         }
 
         public List<string> CheckNeededData(List<string> datecodes)
@@ -88,6 +87,7 @@ namespace TopdeskDataCache
                 serializer.Serialize(file, change);
             }
         }
+
         public void SaveCausedByChanges(string causedByChanges)
         {
             string path = baseFilepath + "\\changes";
@@ -134,6 +134,7 @@ namespace TopdeskDataCache
 
             if (snapshots.Length > 172) { File.WriteAllText(path, snapshots); }
         }
+
         public void SaveChangeActivities(string changeActivities)
         {
             System.IO.Directory.CreateDirectory(baseFilepath + "\\changes\\changeActivities");

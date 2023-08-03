@@ -7,6 +7,8 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
+    /* Schema for downloaded knowledge items */
+
     public partial class Item
     {
         [JsonProperty("item")]

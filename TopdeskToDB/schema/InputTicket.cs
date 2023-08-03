@@ -4,6 +4,8 @@ using Newtonsoft.Json.Converters;
 
 namespace TopdeskDataCache.schema
 {
+
+    /* Schema for pulled tickets */
     public partial class Ticket
     {
         [JsonProperty("id")]

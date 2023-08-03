@@ -11,29 +11,28 @@ namespace TopdeskDataCache
 {
     internal class oDataInterface
     {
-        string username = ConfigurationManager.AppSettings.Get("config_topdesk_email_address");
-        string password = ConfigurationManager.AppSettings.Get("config_topdesk_application_password");
         string encoded;
-
         static readonly HttpClient client = new HttpClient();
 
-        public oDataInterface()
+        public oDataInterface(string username, string password)
         {
+            //Encode the password correctly and set up the HTTP request headers
             encoded = System.Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", encoded);
         }
 
         public static async Task<string> PullData(string url)
         {
+            //make request using the passed URL and check there's no error
             using HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
+            //wait for a response and return it
             string responseBody = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine(responseBody);
             return responseBody;
         }
 
+        /*---------- All below methods are simply to pass the correct URL to our PullData method ----------*/
         public string GetIncidentsCausedByChange()
         {
             string urlString = "https://hud.topdesk.net/services/reporting/v2/odata/IncidentsCausedByChangesLinks";

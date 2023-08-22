@@ -32,6 +32,8 @@ namespace TopdeskDataCache
 
         public List<string> CheckNeededData(List<string> datecodes)
         {
+            //this method is to check which months we already have tickets stored for 
+
             List<string> datecodesToReturn = new List<string>();
 
             foreach (string datecode in datecodes)
@@ -47,6 +49,8 @@ namespace TopdeskDataCache
 
             return datecodesToReturn;
         }
+
+        //---------- Methods for saving different files lie below -----------
 
         public void SaveTickets(string datecode, List<Ticket> tickets, bool currentMonth)
         {
@@ -165,6 +169,7 @@ namespace TopdeskDataCache
 
         public string GetFilepathForDatecode(string datecode)
         {
+            //compiles a filename string for each ticket datecode we're dealing with
             string year = "20" + datecode.Substring(1, 2);
             string dirPath = baseFilepath + "\\tickets\\" + year + "\\";
             string completePath = dirPath + datecode + ".json";
